@@ -29,12 +29,9 @@ class Store{
         });
     }
     addNote(note) {
-        note = {
-            title,
-            text
-        };
+        const { title, text } = note;
 
-        if (!note.title || !note.text) {
+        if (!title || !text) {
             return new Error('Note title and text are required');
         }
 
@@ -45,14 +42,14 @@ class Store{
         };
         return this.getNotes()
         .then((notes) => [...notes, newNote])
-        .then((updatedNotes) => this.write(updatedNotes))
+        .then((updatedNotes) => this.add(updatedNotes))
         .then(() => newNote);
     }
 
     removeNote(id) {
         return this.getNotes()
           .then((notes) => notes.filter((note) => note.id !== id))
-          .then((filteredNotes) => this.write(filteredNotes));
+          .then((filteredNotes) => this.add(filteredNotes));
       }
 }
 module.exports = new Store();
